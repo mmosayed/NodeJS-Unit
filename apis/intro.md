@@ -1,4 +1,4 @@
-# Building APIs: Express + Postgres
+# Building APIs: Intro
 
 # Topics
 - What is an API?
@@ -55,16 +55,137 @@ REST is acronym for REpresentational State Transfer.
 
 ## Designing a RESTful API
 
-### Instagram Clone
+### Petpedia
 
-Let's work on a simple Instagram Clone! This clone should be able to do the following:
+We will be working on building the API of an application called "Petpedia". Petpedia allows people to register the pets they own. We should be able to do the following on Petpedia:
 
-- Show a Newsfeed of all the latest posts
-- Show a User's Profile and all their posts
-- Click into a Post and see all the comments
-- Leave a comment on a Post
+- Create human Users who have a registry with the following information:
+  1. id (must be unique)
+  2. Name
+  3. Email (must be unique)
+  4. Phone Number
+- Create animal Pets who have a registry with the following information:
+  1. id (must be unique)
+  2. owner 
+  3. type (what kind of animal? dog, cat, beaver?)
+  4. name
+  5. age
+- Look up all the users in the registry
+- Look up all the Pets in the registry
+- Look up all the Pets a User owns
+- Look up all the Pets based on their type (example, all the dogs only)
 
 ### Identify Object Model
 
-The very first step in designing a REST API based application is – identifying the objects which will be presented as resources.
+The very first step in designing a REST API based application is identifying the objects which will be presented as resources. In this case we have two important Models:
+
+1. User Model
+2. Pet Model
+
+Note that both objects/resources in our above model will have a unique identifier, which is the `integer id` property. An unique identifier is very important to look up specific models. 
+
+### Create Model Endpoints
+Now when object model is ready, it’s time to decide the endpoints. At this step, while designing the endpoints focus on the relationship between resources and its sub-resources.
+
+```
+// User Endpoints
+/user/all
+/user/{id}
+/user/{id}/pets
+
+// Pets Endpoints
+/pet/all
+/pet/{id}
+/pet/{type}
+```
+
+### Determine Representation
+
+When returning a collection resource, include only most important information about resource. This will keep the size of payload small, and so will improve the performance of REST APIs.
+
+#### User Model Responses
+
+Single model response:
+
+```javascript 
+{
+  id: 1,
+  name: "John Smith",
+  email: "john.smith@email.com",
+  phonenumber: 1231231234
+}
+```
+
+Multiple model resonse:
+
+```javascript
+[
+  {USER_1},
+  {USER_2},
+  ...
+]
+```
+
+#### Pet Model Responses
+
+Single model response:
+
+```javascript 
+{
+  id: 1,
+  owner: 1,
+  type: "dog",
+  name: "Rexy",
+  age: 2
+}
+```
+
+Multiple model resonse:
+
+```javascript
+[
+  {PET_1},
+  {PET_2},
+  ...
+]
+```
+
+### Assign HTTP Methods
+
+So our resource endpoints and their representation are fixed now. Let’s decide the possible operations in application and map these operations on resource endpoints. A user of Petpedia can perform browse, create, update or delete operations. So let’s map them.
+
+#### CREATING MODELS
+
+```
+POST /user
+POST /pet
+```
+
+#### BROWSING 
+
+```
+// User Endpoints
+GET /user/all
+GET /user/{id}
+GET /user/{id}/pets
+
+// Pets Endpoints
+GET /pet/all
+GET /pet/{id}
+GET /pet/{type}
+```
+
+#### UPDATING
+
+```
+PUT /user/{id}
+PUT /pet/{id}
+```
+
+#### DELETING
+
+```
+DELETE /user/{id}
+DELETE /pet/{id}
+```
 
