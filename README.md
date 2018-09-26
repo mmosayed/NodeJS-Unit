@@ -16,7 +16,8 @@
 | 10 | Databases 1: Intro | [Lesson](databases/lesson-1.md) |
 | 11 | Databases 2: Postgres & PG-Promise*  | Lesson |
 | 12 | Databases 3: SQL Advanced*  | Lesson |
-| 13 | Building APIs: Express + Postgres*  | Lesson |
+| 13 | Building APIs 1: Intro & Designs  | [Lesson](apis/intro.md) |
+| 14 | Building APIs 2: Express & Postgres*  | [Lesson](apis/express_postgres.md) |
 
 
 
